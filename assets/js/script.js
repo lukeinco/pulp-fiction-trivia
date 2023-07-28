@@ -1,4 +1,50 @@
+var questionBank = [
+    {
+        prompt: "Oh you're upset??? Well I'm a mushroom cloud laying motherf-----, motherf-----!",
+        answer: "Jules",
+        choices: [
+            "Jules",
+            "Vincent",
+            "Marcellus",
+            "Mia",
+            "Butch"
+        ]
+    }, {
+        prompt: "Zedd's dead baby, Zedd's dead.",
+        answer: "Butch",
+        choices: [
+            "Jules",
+            "Vincent",
+            "Marcellus",
+            "Mia",
+            "Butch"
+        ]
+    }, {
+        prompt: "A Big Mac's still a Big Mac except they call it Le Big Mac.",
+        answer: "Vincent",
+        choices: [
+            "Jules",
+            "Vincent",
+            "Marcellus",
+            "Mia",
+            "Butch"
+        ]
+    }, {
+        prompt: "What country you from? What?! What aint no country I ever heard of. They speak english in What?",
+        answer: "Jules",
+        choices: [
+            "Jules",
+            "Vincent",
+            "Marcellus",
+            "Mia",
+            "Butch"
+        ]
+    }
+]
+
 var questionNumber = 0;
+var currentAnswerChoices = questionBank[questionNumber].choices;
+var ol = document.children[0].children[1].children[3].children[0];
 
 // GIVEN I am taking a code quiz
 // WHEN I click the start button
@@ -11,56 +57,59 @@ var questionNumber = 0;
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
+showQuestion();
 function showQuestion() {
-    // select the HTML element where I want the question to be
+
     // i need an html element with an id and select it with querySelector
     // get the currentQuestion with count or questionNumber
-    var currentPrompt = questionBank[questionNumber].prompt
     showAnswers()
 }
 function showAnswers() {
     // answers is an array, because I have multiple
     // Select the HTML element where I want to populate my answers
     // it will also need an id and I will select it
+    var currentPrompt = questionBank[questionNumber].prompt;
     var answersContainer = document.getElementById("answers-container");
-    answersContainer.appendChild()
-    console.log(answersContainer)
-    // empty the container
+    answersContainer.textContent = currentPrompt;
+    // answersContainer.appendChild();
+    console.log(questionNumber);
+    var blank = ""
+    answersContainer.textContent = (blank += currentPrompt);
     // populate it
-    var currentAnswerChoices = questionBank[questionNumber].choices
-    console.log("These are my choices")
-    console.log(currentAnswerChoices)
-    // iterate through currentAnswerChoices,
-    console.log("about to iterate through my choices")
-    function createButton(choice) {
-        var choiceEl = document.createElement("button");
-        choiceEl.textContent = choice;
-        console.log("This is a button!")
-        console.log(choiceEl)
-        choiceEl.addEventListener("click", checkAnswer);
-        answersContainer.append(choiceEl)
-    }
-
-    for (let i = 0; i < currentAnswerChoices.length; i++) {
-        createButton(currentAnswerChoices[i]);
-    }
-
-    // create an Element for each choice
-    // ol.appendChild(choiceEl);
-    //
+    
+    
 }
+function createButton(choice) {
+    var choiceEl = document.createElement("button");
+    choiceEl.textContent = choice;
+    ol.appendChild(choiceEl)
+    // console.log(choiceEl)
+    choiceEl.addEventListener("click", checkAnswer, showAnswers);
+
+}
+
+for (let i = 0; i < currentAnswerChoices.length; i++) {
+    createButton(currentAnswerChoices[i]);
+}
+
 
 function checkAnswer(event) {
     console.log("The button was pressed!!")
     event.preventDefault()
-    console.log(event)
-    console.log(event.target)
-    console.dir(event.target)
+    var response = document.getElementById("response");
+    response.textContent = ("");
+    console.dir(response)
+    if (event.target.innerText === questionBank[questionNumber].answer){
+    response.textContent = ("Nice +5 pts");
+    } else {
+    response.textcontent = ("Better luck next time -20 seconds");
+    }
+    
     // if correct, add points
     // else incorrect, subtract time
     // move to next question
-    // questionNumber ++
-    // showQuestion()
+    questionNumber++;
+    showQuestion()
 }
 
 // display homepage with start button
@@ -78,31 +127,9 @@ function checkAnswer(event) {
 //
 // highscores.hmtl updated with score
 
-var questionBank = [
-    {
-        prompt: "Oh you're upset??? Well I'm a mushroom cloud laying motherf-----, motherf-----!",
-        answer: "Jules",
-        choices: [ "Jules", "Vincent", "Marcellus", "Mia", "Butch"]
-    }, {
-        prompt: "String to show question as 2222",
-        answer: "C",
-        choices: ["Jules", "Vincent", "Marcellus", "Mia", "Butch"]
-    }, {
-        prompt: "String to show question as 33333",
-        answer: "54",
-        choices: ["Jules", "Vincent", "Marcellus", "Mia", "Butch"]
-    }, {
-        prompt: "String to show question as 4444",
-        answer: "Aas",
-        choices: ["Jules", "Vincent", "Marcellus", "Mia", "Butch"]
-    }
-]
 
-var paragraph = document.children[0].children[1].children[2];
-var ol = document.children[0].children[1].children[3].children[0];
-var count = 0;
-console.log(paragraph)
-console.dir(paragraph)
+// console.log(paragraph)
+// console.dir(j)
 // button
 
 
@@ -110,7 +137,7 @@ console.dir(paragraph)
 //     button(characters[i]);
 // }
 
-ol.children[0]
+// ol.children[0]
 
 // quotes
 // function populateQuestion(x) {
@@ -119,4 +146,4 @@ ol.children[0]
 
 
 // question(quotes[count]);
-showAnswers()
+// showAnswers()
