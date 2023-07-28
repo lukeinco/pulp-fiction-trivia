@@ -1,0 +1,54 @@
+*{
+
+    color: yellow;
+}
+body {
+
+    background-color: black;
+}
+
+header {
+display: flex;
+justify-content: space-between;
+padding: 25px ;
+margin: 8px;
+background-color: red;
+font-size: 20px;
+font-weight: bold;
+align-items: center;
+}
+header a {
+    color: inherit;
+}
+header div {
+    position: absolute;
+    margin-left: 25%;
+    text-align: center;
+}
+header h1 {
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+img {
+    margin-left: 28%;
+}
+
+main ol {
+    display: flex;
+    justify-content: space-between;
+
+}
+button {
+    padding: 5px 15px 5px 15px;
+    border-radius: 60px;
+    font-weight: bolder;
+    font-size: 30px;
+    background-color:#400700
+    
+}
+
+button:hover {
+    background-color: aliceblue;
+    color: #400700;
+}
