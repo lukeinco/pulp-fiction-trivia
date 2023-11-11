@@ -43,8 +43,13 @@ var questionBank = [
 ]
 
 var questionNumber = 0;
+var score = 0;
 var currentAnswerChoices = questionBank[questionNumber].choices;
-var ol = document.children[0].children[1].children[3].children[0];
+var main = document.children[0].children[1].children[3]
+var olEl = document.createElement("ol");
+var answersContainer = document.getElementById("answers-container");
+var btn = document.createElement("button");
+var timeLeft = 30
 
 // GIVEN I am taking a code quiz
 // WHEN I click the start button
@@ -57,41 +62,71 @@ var ol = document.children[0].children[1].children[3].children[0];
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
-showQuestion();
-function showQuestion() {
-
-    // i need an html element with an id and select it with querySelector
-    // get the currentQuestion with count or questionNumber
-    showAnswers()
+function loadBtn() {
+    btn.remove();
+    for (let i = 0; i < currentAnswerChoices.length; i++) {
+        createButton(currentAnswerChoices[i]);
+    }
+    showQuestion();
 }
+
+function startButton() {
+    btn.textContent = ("Start");
+    main.appendChild(btn)
+    answersContainer.textContent = ("How well do you remember these Pulp Fiction quotes? Guess which character from this list said what. Each correct answer will give you 5 points, but every answer you get wrong will cost you precious time!")
+    btn.addEventListener("click", loadBtn);
+};
+
+    
+    startButton();
+    console.log(questionNumber);
+    function showQuestion() {
+        if (questionNumber <= 3) {
+            showAnswers()
+        } else {
+            console.log("no more");
+            // localStorage.setItem()
+            olEl.remove();
+            answersContainer.textContent = ("Nice job finishing!    Score: " + score + "     Click the link in the top corner to see how your score compares.")
+    //         main.innerHTML += `
+    //         <input id = "id" placeholder="enter initials">
+    //         <button id="formbtn">Enter</button>`;
+    //         document.getElementById('formbtn').addEventListener('submit', function(event) {
+    //             event.preventDefault();
+    //             var initials = document.getElementById('id').value;
+    //             console.log(initials);
+    //             console.log('hi');
+    //             localStorage.setItem('initials', initials);
+    // })}
+    main.innerHTML += `
+    <form id="myForm">
+        <input id="id" placeholder="enter initials">
+        <button type="submit">Enter</button>
+    </form>`;
+
+document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var initials = document.getElementById('id').value;
+    console.log(initials);
+    localStorage.setItem(initials, score);
+});
+}}
+
 function showAnswers() {
-    // answers is an array, because I have multiple
-    // Select the HTML element where I want to populate my answers
-    // it will also need an id and I will select it
     var currentPrompt = questionBank[questionNumber].prompt;
-    var answersContainer = document.getElementById("answers-container");
     answersContainer.textContent = currentPrompt;
-    // answersContainer.appendChild();
     console.log(questionNumber);
     var blank = ""
     answersContainer.textContent = (blank += currentPrompt);
-    // populate it
-    
-    
 }
+document.getElementById('timer').textContent = (`timer:` + timeLeft);
 function createButton(choice) {
     var choiceEl = document.createElement("button");
     choiceEl.textContent = choice;
-    ol.appendChild(choiceEl)
-    // console.log(choiceEl)
-    choiceEl.addEventListener("click", checkAnswer, showAnswers);
-
+    main.appendChild(olEl);
+    olEl.appendChild(choiceEl);
+    choiceEl.addEventListener("click", checkAnswer);
 }
-
-for (let i = 0; i < currentAnswerChoices.length; i++) {
-    createButton(currentAnswerChoices[i]);
-}
-
 
 function checkAnswer(event) {
     console.log("The button was pressed!!")
@@ -99,51 +134,15 @@ function checkAnswer(event) {
     var response = document.getElementById("response");
     response.textContent = ("");
     console.dir(response)
-    if (event.target.innerText === questionBank[questionNumber].answer){
-    response.textContent = ("Nice +5 pts");
+    if (event.target.innerText === questionBank[questionNumber].answer) {
+        response.textContent = ("Nice +5 pts");
+        score = (score + 5);
+        console.log(score);
     } else {
-    response.textcontent = ("Better luck next time -20 seconds");
-    }
-    
-    // if correct, add points
-    // else incorrect, subtract time
-    // move to next question
-    questionNumber++;
+        response.textContent = ("Better luck next time -10 seconds");
+        timeLeft - 10;
+    } questionNumber++;
     showQuestion()
-}
+};
 
-// display homepage with start button
-// CSS centered
-// red/yellow/black nav bar
-// JS start button starts timer
-// start button shows questions
-// HTML view highscores
-// timer
-// JS questions have a correct answer
-// message displayed for a short time
-// if won 'good job' for 3 seconds + 5 points
-// if lost 'Nope! Try again next time.' - 5 seconds
-// display next questions
-//
-// highscores.hmtl updated with score
-
-
-// console.log(paragraph)
-// console.dir(j)
-// button
-
-
-// for (let i = 0; i < characters.length; i++) {
-//     button(characters[i]);
-// }
-
-// ol.children[0]
-
-// quotes
-// function populateQuestion(x) {
-//     paragraph.textContent = (x);
-// }
-
-
-// question(quotes[count]);
-// showAnswers()
+module.exports = score;
